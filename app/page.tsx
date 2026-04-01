@@ -13,7 +13,6 @@ export default function LandingPage() {
   const router = useRouter();
 
   const login = typeof localStorage !== "undefined" ? JSON.parse(localStorage.getItem("login") || "null") : null;
-  console.log(login);
 
   useEffect(() => {
     if (login && login.name && login.email) {

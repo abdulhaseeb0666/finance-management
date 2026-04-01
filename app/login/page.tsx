@@ -15,7 +15,6 @@ const Page = () => {
     );
     const [error, seterror] = useState("");
 
-    console.log(realData)
     
     function loginHandler(e : React.MouseEvent<HTMLButtonElement>) : void {
         e.preventDefault();

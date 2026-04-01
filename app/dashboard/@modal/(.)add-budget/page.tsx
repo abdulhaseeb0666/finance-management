@@ -19,7 +19,6 @@ const Page = () => {
         )
     const [user, setuser] = useState(data?.users.find((user) => user.name === name && user.email === email) || null)
     const [budget, setbudget] = useState(user?.budgets || [])
-    console.log(budget)
 
     const [category, setCategory] = useState("")
     const [limit, setLimit] = useState("")

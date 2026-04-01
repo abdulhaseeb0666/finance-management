@@ -19,11 +19,6 @@ const Page = () => {
     const [transactions , setTransactions] = useState(user?.transactions || [])
     const [budget, setbudget] = useState(user?.budgets || [])
     
-    // console.log(data)
-    // console.log(user)
-    // console.log(accounts)
-    // console.log(transactions)
-    
     const [error, seterror] = useState("")
     const [account, setaccount] = useState("")
     const [amount, setamount] = useState("")
@@ -31,14 +26,6 @@ const Page = () => {
     const [date, setdate] = useState("")
     const [type, settype] = useState("")
     const [category, setcategory] = useState("")
-
-    // function fetchAccountID(){
-    //     const accountData = user?.accounts.find((acc) => acc.id == account);
-    //     console.log(accountData);
-    //     return accountData ? accountData.id : "";
-    // }
-
-    // fetchAccountID()
 
     function handleSubmit(e : React.FormEvent) {
         e.preventDefault();

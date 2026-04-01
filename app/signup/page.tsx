@@ -21,7 +21,6 @@ export default function SignupPage() {
     JSON.parse(localStorage.getItem("realData") || "null")
   );
 
-  console.log(localData)
 
   function handleSubmit(e : React.SubmitEvent<HTMLFormElement>) : void {
     e.preventDefault();
@@ -59,7 +58,6 @@ export default function SignupPage() {
 
     setsignup("Signing Up...")
 
-    console.log(localData)
 
     setTimeout(() => {
       router.push(`/newsignup?name=${name}&email=${email}&password=${password}`)

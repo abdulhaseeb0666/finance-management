@@ -85,7 +85,6 @@ export default function DashboardPage() {
     }
   }, [email , name , password , error , localData]);
   
-  console.log(error);
   setTimeout(() => {
     
   }, 1000);
