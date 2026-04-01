@@ -5,146 +5,133 @@ import { useRouter, useSearchParams } from "next/navigation";
 import type { FinanceContextType } from "@/app/context/FinanceContext";
 
 const Page = () => {
-    const router = useRouter()
-    const searchparams = useSearchParams()
+  const router = useRouter()
+  const searchparams = useSearchParams()
 
-    const name = searchparams.get("name")
-    const email = searchparams.get("email")
+  const name = searchparams.get("name")
+  const email = searchparams.get("email")
 
-    const [data, setdata] = useState<FinanceContextType | null>(
-        localStorage && JSON.parse(localStorage.getItem("realData") || "null")
-    )
-    const [user, setuser] = useState(data?.users.find((user) => user.name === name && user.email === email) || null)
-    const [accounts, setaccounts] = useState(user?.accounts || [])
-    const [transactions , setTransactions] = useState(user?.transactions || [])
-    const [budget, setbudget] = useState(user?.budgets || [])
+  const [data, setdata] = useState<FinanceContextType | null>(
+      localStorage && JSON.parse(localStorage.getItem("realData") || "null")
+  )
+  const [user, setuser] = useState(data?.users.find((user) => user.name === name && user.email === email) || null)
+  const [accounts, setaccounts] = useState(user?.accounts || [])
+  const [transactions , setTransactions] = useState(user?.transactions || [])
+  const [budget, setbudget] = useState(user?.budgets || [])
+  
+  const [error, seterror] = useState("")
+  const [account, setaccount] = useState("")
+  const [amount, setamount] = useState("")
+  const [description, setdescription] = useState("")
+  const [date, setdate] = useState("")
+  const [type, settype] = useState("")
+  const [category, setcategory] = useState("")
+
+  function handleSubmit(e : React.FormEvent) {
+    e.preventDefault();
+
+      const accountBalance = user?.accounts.find((acc) => acc.id === account)?.balance || 0;
     
-    const [error, seterror] = useState("")
-    const [account, setaccount] = useState("")
-    const [amount, setamount] = useState("")
-    const [description, setdescription] = useState("")
-    const [date, setdate] = useState("")
-    const [type, settype] = useState("")
-    const [category, setcategory] = useState("")
-
-    function handleSubmit(e : React.FormEvent) {
-        e.preventDefault();
- 
-        const accountBalance = user?.accounts.find((acc) => acc.id === account)?.balance || 0;
-        
-        const newTransaction = {
-            id : `txn_00${transactions.length+1}`,
-            date: date,
-            type: type,
-            category: category,
-            amount: Number(amount),
-            accountId: account,
-            description: description,
-        }
-
-        if (type === "expense" && Number(amount) > accountBalance) {
-            seterror("Insufficient balance in the selected account.");
-            return;
-        }
-        if (type === "expense" && Number(amount) <= accountBalance) {
-            const updatedData = { ...data };
-            updatedData.users = updatedData.users?.map((u) => {
-                if (u.name === name && u.email === email) {
-                    return {
-                        ...u,
-                        accounts: u.accounts.map((acc) => {
-                            if (acc.id === account) {
-                                return { ...acc, balance: acc.balance - Number(amount) };
-                            }
-                            return acc;
-                        }),
-                        budgets: u.budgets.map((b) => {
-                          if (b.category === category) {
-                            return { ...b, spent: b.spent + Number(amount) };
-                          }
-                          return b;
-                        }),
-                        insights : [...u.insights , {
-                            id : `ins_00${u.insights.length+1}`,
-                            type : "expense",
-                            message : `You spent $${amount} on ${category} on ${date}.`
-                          }
-                        ],
-                        transactions: [...u.transactions, newTransaction] // optional
-                    };
-                }
-                return u;
-            });
-            localStorage.setItem("realData", JSON.stringify(updatedData));
-        }
-
-        if(type === "expense" && Number(amount) <= accountBalance) {
-          budget.forEach((b) => {
-            if(b.category === category) {
-              if(b.limit && b.spent + Number(amount) > b.limit) {
-                const updatedData = { ...data };
-                updatedData.users = updatedData.users?.map((u) => {
-                    if (u.name === name && u.email === email) {
-                        return {
-                            ...u,
-                            insights : [...u.insights , {
-                                id : `ins_00${u.insights.length+1}`,
-                                type : "Budget Alert",
-                                message : "Your spending in category '" + category + "' has exceeded the budget limit."
-                              }
-                            ],
-                        };
-                    }
-                    return u;
-                });
-                localStorage.setItem("realData", JSON.stringify(updatedData));
-              }
-            }
-          });
-        }
-
-        if(type === "income"){
-            const updatedData = { ...data };
-            updatedData.users = updatedData.users?.map((u) => {
-                if (u.name === name && u.email === email) {
-                    return {
-                        ...u,
-                        accounts: u.accounts.map((acc) => {
-                            if (acc.id === account) {
-                                return { ...acc, balance: acc.balance + Number(amount) };
-                            }
-                            return acc;
-                        }),
-                        insights : [...u.insights , {
-                            id : `ins_00${u.insights.length+1}`,
-                            type : "income",
-                            message : `You earned $${amount} from ${category} on ${date}.`
-                          }
-                        ],
-                        transactions: [...u.transactions, newTransaction] // optional
-                    };
-                }
-                return u;
-            });
-            localStorage.setItem("realData", JSON.stringify(updatedData));
-        }
-        
-        if (user) {
-            const data: FinanceContextType | null = JSON.parse(localStorage.getItem("realData") || "null");
-            if (data) {
-                const userIndex = data.users.findIndex(
-                    (u) => u.name === name && u.email === email
-                );
-                if (userIndex !== -1) {
-                    data.users[userIndex].transactions.push(newTransaction);
-                    localStorage.setItem("realData", JSON.stringify(data));
-                    setuser(data.users[userIndex]);
-                }
-            }
-        }
-        alert("Reload Page to see the new transaction added.");
-        router.back();
+    const newTransaction = {
+        id : `txn_00${transactions.length+1}`,
+        date: date,
+        type: type,
+        category: category,
+        amount: Number(amount),
+        accountId: account,
+        description: description,
     }
+
+    if (type === "expense" && Number(amount) > accountBalance) {
+        seterror("Insufficient balance in the selected account.");
+        return;
+    }
+
+    if (type === "expense" && Number(amount) <= accountBalance) {
+        const updatedData = { ...data };
+        updatedData.users = updatedData.users?.map((u) => {
+            if (u.name === name && u.email === email) {
+                return {
+                    ...u,
+                    accounts: u.accounts.map((acc) => {
+                        if (acc.id === account) {
+                            return { ...acc, balance: acc.balance - Number(amount) };
+                        }
+                        return acc;
+                    }),
+                    budgets: u.budgets.map((b) => {
+                      if (b.category === category) {
+                        return { ...b, spent: b.spent + Number(amount) };
+                      }
+                      return b;
+                    }),
+                    insights : [...u.insights , {
+                        id : `ins_00${u.insights.length+1}`,
+                        type : "expense",
+                        message : `You spent $${amount} on ${category} on ${date}.`
+                      }
+                    ],
+                    transactions: [...u.transactions, newTransaction] // optional
+                };
+            }
+            return u;
+        });
+        localStorage.setItem("realData", JSON.stringify(updatedData));
+    }
+
+    if(type === "expense" && Number(amount) <= accountBalance) {
+      budget.forEach((b) => {
+        if(b.category === category) {
+          if(b.limit && b.spent + Number(amount) > b.limit) {
+            const updatedData = { ...data };
+            updatedData.users = updatedData.users?.map((u) => {
+                if (u.name === name && u.email === email) {
+                    return {
+                        ...u,
+                        insights : [...u.insights , {
+                            id : `ins_00${u.insights.length+1}`,
+                            type : "Budget Alert",
+                            message : "Your spending in category '" + category + "' has exceeded the budget limit."
+                          }
+                        ],
+                    };
+                }
+                return u;
+            });
+            localStorage.setItem("realData", JSON.stringify(updatedData));
+          }
+        }
+      });
+    }
+
+    if(type === "income"){
+        const updatedData = { ...data };
+        updatedData.users = updatedData.users?.map((u) => {
+            if (u.name === name && u.email === email) {
+                return {
+                    ...u,
+                    accounts: u.accounts.map((acc) => {
+                        if (acc.id === account) {
+                            return { ...acc, balance: acc.balance + Number(amount) };
+                        }
+                        return acc;
+                    }),
+                    insights : [...u.insights , {
+                        id : `ins_00${u.insights.length+1}`,
+                        type : "income",
+                        message : `You earned $${amount} from ${category} on ${date}.`
+                      }
+                    ],
+                    transactions: [...u.transactions, newTransaction] // optional
+                };
+            }
+            return u;
+        });
+        localStorage.setItem("realData", JSON.stringify(updatedData));
+    }
+    alert("Reload Page to see the new transaction added.");
+    router.back();
+  }
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
