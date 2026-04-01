@@ -52,7 +52,7 @@ const Page = () => {
                 }
             }
         }
-
+        alert("Reload Page to see the new account added.");
         router.back();
     }
 

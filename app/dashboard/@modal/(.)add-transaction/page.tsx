@@ -64,12 +64,43 @@ const Page = () => {
                           }
                           return b;
                         }),
+                        insights : [...u.insights , {
+                            id : `ins_00${u.insights.length+1}`,
+                            type : "expense",
+                            message : `You spent $${amount} on ${category} on ${date}.`
+                          }
+                        ],
                         transactions: [...u.transactions, newTransaction] // optional
                     };
                 }
                 return u;
             });
             localStorage.setItem("realData", JSON.stringify(updatedData));
+        }
+
+        if(type === "expense" && Number(amount) <= accountBalance) {
+          budget.forEach((b) => {
+            if(b.category === category) {
+              if(b.limit && b.spent + Number(amount) > b.limit) {
+                const updatedData = { ...data };
+                updatedData.users = updatedData.users?.map((u) => {
+                    if (u.name === name && u.email === email) {
+                        return {
+                            ...u,
+                            insights : [...u.insights , {
+                                id : `ins_00${u.insights.length+1}`,
+                                type : "Budget Alert",
+                                message : "Your spending in category '" + category + "' has exceeded the budget limit."
+                              }
+                            ],
+                        };
+                    }
+                    return u;
+                });
+                localStorage.setItem("realData", JSON.stringify(updatedData));
+              }
+            }
+          });
         }
 
         if(type === "income"){
@@ -84,6 +115,12 @@ const Page = () => {
                             }
                             return acc;
                         }),
+                        insights : [...u.insights , {
+                            id : `ins_00${u.insights.length+1}`,
+                            type : "income",
+                            message : `You earned $${amount} from ${category} on ${date}.`
+                          }
+                        ],
                         transactions: [...u.transactions, newTransaction] // optional
                     };
                 }
@@ -105,6 +142,7 @@ const Page = () => {
                 }
             }
         }
+        alert("Reload Page to see the new transaction added.");
         router.back();
     }
 

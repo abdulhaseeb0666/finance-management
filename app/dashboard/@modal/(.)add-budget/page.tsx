@@ -60,6 +60,7 @@ const Page = () => {
                 }
             });
             localStorage.setItem("realData", JSON.stringify(data));
+            alert("Reload Page to see the new budget added.");
             router.back();
         }
     }

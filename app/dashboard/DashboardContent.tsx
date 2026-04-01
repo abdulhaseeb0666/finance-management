@@ -47,6 +47,7 @@ const DashboardContent = () => {
 
     const accounts = user?.accounts;
     const transactions = user?.transactions;
+    const insigts = user?.insights;
 
     function addAccount() {
         router.push("/dashboard/add-account?name=" + name + "&email=" + email);
@@ -276,16 +277,21 @@ const DashboardContent = () => {
         <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="bg-white p-6 rounded shadow">
             <h3 className="font-semibold mb-2">Insights</h3>
-            <p className="text-gray-600">You spent 40% on groceries this month.</p>
+            {
+              insigts?.map((insight , idx) => (
+                <p key={idx} className="text-gray-600">- {insight.message}</p>
+              ))
+            }
           </div>
-          <div className="bg-white p-6 rounded shadow">
+          {/* <div className="bg-white p-6 rounded shadow">
             <h3 className="font-semibold mb-2">Monthly Summary</h3>
             <p className="text-gray-600">Total income: $5,000, Total spending: $2,345</p>
           </div>
+
           <div className="bg-white p-6 rounded shadow">
             <h3 className="font-semibold mb-2">Spendings</h3>
-            <p className="text-gray-600">Top categories: Groceries, Entertainment, Transport</p>
-          </div>
+            <p className="text-gray-600">Food: $500, Rent: $1,200, Entertainment: $300</p>
+          </div> */}
         </section>
       </main>
     </div>
