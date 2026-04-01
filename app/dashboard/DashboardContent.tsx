@@ -104,9 +104,6 @@ const DashboardContent = () => {
       <header className="bg-white shadow p-4 flex justify-between items-center">
         <h1 className="text-2xl font-semibold">Welcome, {name}!</h1>
         <div className="flex items-center gap-4">
-          <button className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 hover:cursor-pointer">
-            Profile
-          </button>
           <button 
             onClick={() => {
               localStorage.removeItem("login");
