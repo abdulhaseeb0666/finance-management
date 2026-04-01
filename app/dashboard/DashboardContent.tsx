@@ -278,9 +278,13 @@ const DashboardContent = () => {
           <div className="bg-white p-6 rounded shadow">
             <h3 className="font-semibold mb-2">Insights</h3>
             {
-              insigts?.map((insight , idx) => (
+              insigts?.length === 0 ? (
+                <p className="text-gray-600">No insights found. Please add a transaction.</p>
+              ) : (
+                insigts?.map((insight , idx) => (
                 <p key={idx} className="text-gray-600">- {insight.message}</p>
               ))
+              )
             }
           </div>
           {/* <div className="bg-white p-6 rounded shadow">
