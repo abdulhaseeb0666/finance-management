@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { Trash } from 'lucide-react';
 import { useRouter } from "next/navigation";
 import Link from 'next/link';
+import SpendingPieChart from "../components/(real)/SpendingPieChart";
 
 const DashboardContent = () => {
   
@@ -271,28 +272,38 @@ const DashboardContent = () => {
         </section>
 
         {/* Insights / Monthly Summary / Spendings */}
-        <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-white p-6 rounded shadow">
+        <section className="flex gap-4">
+          <div className="bg-white p-6 rounded shadow w-[30%]">
             <h3 className="font-semibold mb-2">Insights</h3>
             {
               insigts?.length === 0 ? (
                 <p className="text-gray-600">No insights found. Please add a transaction.</p>
               ) : (
-                insigts?.map((insight , idx) => (
-                <p key={idx} className="text-gray-600">- {insight.message}</p>
+                insigts?.slice(insigts.length - 5 , insigts.length).map((insight , idx) => (
+                <p key={idx} className={`text-gray-600 ${insight.type == "Budget Alert" ? "text-red-600" : ""}`}>- {insight.message}</p>
               ))
               )
             }
           </div>
-          {/* <div className="bg-white p-6 rounded shadow">
+          <div className="bg-white p-6 rounded shadow w-[30%]">
             <h3 className="font-semibold mb-2">Monthly Summary</h3>
             <p className="text-gray-600">Total income: $5,000, Total spending: $2,345</p>
           </div>
 
-          <div className="bg-white p-6 rounded shadow">
+          <div className="bg-white p-6 rounded shadow w-[40%]">
             <h3 className="font-semibold mb-2">Spendings</h3>
-            <p className="text-gray-600">Food: $500, Rent: $1,200, Entertainment: $300</p>
-          </div> */}
+            {
+              user?.spendingByCategory.length === 0 ? (
+                <p className="text-gray-600">No spending found. Please add a transaction.</p>
+              ) : (
+                user?.spendingByCategory.slice(user.spendingByCategory.length - 4 , user.spendingByCategory.length).map((spending , idx) => (
+                  <p key={idx} className="text-gray-600" >- {spending.name}: ${spending.value.toLocaleString()}</p>
+                ))
+              )
+            }
+
+            <SpendingPieChart name={String(name)} email={String(email)} />
+          </div>
         </section>
       </main>
     </div>

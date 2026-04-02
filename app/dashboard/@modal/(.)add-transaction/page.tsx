@@ -30,7 +30,7 @@ const Page = () => {
   function handleSubmit(e : React.FormEvent) {
     e.preventDefault();
 
-      const accountBalance = user?.accounts.find((acc) => acc.id === account)?.balance || 0;
+    const accountBalance = user?.accounts.find((acc) => acc.id === account)?.balance || 0;
     
     const newTransaction = {
         id : `txn_00${transactions.length+1}`,
@@ -71,6 +71,12 @@ const Page = () => {
                         message : `You spent $${amount} on ${category} on ${date}.`
                       }
                     ],
+                    spendingByCategory : [ ...u.spendingByCategory.filter((s) => s.name !== category) ,
+                        {
+                            name : category,
+                            value : (u.spendingByCategory.find((s) => s.name === category)?.value || 0) + Number(amount)
+                        }
+                    ],
                     transactions: [...u.transactions, newTransaction] // optional
                 };
             }
@@ -87,13 +93,32 @@ const Page = () => {
             updatedData.users = updatedData.users?.map((u) => {
                 if (u.name === name && u.email === email) {
                     return {
-                        ...u,
-                        insights : [...u.insights , {
-                            id : `ins_00${u.insights.length+1}`,
-                            type : "Budget Alert",
-                            message : "Your spending in category '" + category + "' has exceeded the budget limit."
-                          }
-                        ],
+                      ...u,
+                      accounts: u.accounts.map((acc) => {
+                      if (acc.id === account) {
+                          return { ...acc, balance: acc.balance - Number(amount) };
+                      }
+                      return acc;
+                      }),
+                      budgets: u.budgets.map((b) => {
+                        if (b.category === category) {
+                          return { ...b, spent: b.spent + Number(amount) };
+                        }
+                        return b;
+                      }),
+                      insights : [...u.insights , {
+                          id : `ins_00${u.insights.length+1}`,
+                          type : "Budget Alert",
+                          message : "Your spending in category '" + category + "' has exceeded the budget limit."
+                        }
+                      ],
+                      spendingByCategory : [ ...u.spendingByCategory.filter((s) => s.name !== category) ,
+                      {
+                          name : category,
+                          value : (u.spendingByCategory.find((s) => s.name === category)?.value || 0) + Number(amount)
+                      }
+                      ],
+                      transactions: [...u.transactions, newTransaction] // optional
                     };
                 }
                 return u;
