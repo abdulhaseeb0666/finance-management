@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation";
 import type { FinanceContextType } from "@/app/context/FinanceContext";
+import { X } from "lucide-react";
 
 const Page = () => {
   const router = useRouter()
@@ -159,75 +160,88 @@ const Page = () => {
   }
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50">
-      
-      {/* Overlay */}
-      <div
-        className="absolute top-0 left-0 right-0 bottom-0 bg-black/50 backdrop-blur-sm"
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
+
+  {/* Overlay */}
+  <div
+    className="absolute inset-0 bg-black/40 backdrop-blur-md transition-opacity"
+    onClick={() => router.back()}
+  />
+
+  {/* Modal Card */}
+  <div className="relative w-full max-w-md bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl p-6 z-10 animate-fadeIn">
+
+    {/* Header */}
+    <div className="flex items-center justify-between mb-6 border-b border-gray-200 pb-3">
+      <h2 className="text-2xl font-bold text-gray-800">Add Transaction</h2>
+      <button
         onClick={() => router.back()}
-      />
+        className="p-2 rounded-full hover:bg-gray-100 transition"
+      >
+        <X size={22} />
+      </button>
+    </div>
 
-      {/* Modal */}
-      <div className="relative bg-white w-105 p-6 rounded-2xl shadow-xl z-10">
-        
-        {/* Header */}
-        <h2 className="text-2xl font-semibold mb-4">
-          Add Transaction
-        </h2>
+    {/* Error */}
+    {error && <p className="text-red-500 text-center mb-4">{error}</p>}
 
-        {
-            error && <p className="text-red-500 mb-4">{error}</p>
-        }
+    {/* Form */}
+    <form onSubmit={handleSubmit} className="space-y-4">
 
-        {/* Form */}
-        <form onSubmit={(e) => {
-                handleSubmit(e)
-            }} className="flex flex-col gap-4">
-          
-          {/* Account */}
-          <select
-            name="account"
-            value={account}
-            onChange={(e) => setaccount(e.target.value)}
-            className="border p-3 rounded-lg"
-          >
-            <option value="">Select Account</option>
-            {user?.accounts.map((account) => (
-              <option key={account.id} value={account.id}>
-                {account.name}
-              </option>
-            ))}
-          </select>
+      {/* Account */}
+      <div className="flex flex-col">
+        <label className="text-sm font-medium text-gray-600 mb-1">Account</label>
+        <select
+          name="account"
+          value={account}
+          onChange={(e) => setaccount(e.target.value)}
+          className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+          required
+        >
+          <option value="">Select Account</option>
+          {user?.accounts.map((acc) => (
+            <option key={acc.id} value={acc.id}>{acc.name}</option>
+          ))}
+        </select>
+      </div>
 
-          {/* Amount */}
-          <input
-            type="number"
-            name="amount"
-            placeholder="Amount"
-            value={amount}
-            onChange={(e) => setamount(e.target.value)}
-            className="border p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
-          />
+      {/* Amount */}
+      <div className="flex flex-col">
+        <label className="text-sm font-medium text-gray-600 mb-1">Amount</label>
+        <input
+          type="number"
+          name="amount"
+          placeholder="Enter amount"
+          value={amount}
+          onChange={(e) => setamount(e.target.value)}
+          className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+          required
+        />
+      </div>
 
-          {/* Type */}
+      {/* Type & Category */}
+      <div className="flex gap-3">
+        <div className="flex-1 flex flex-col">
+          <label className="text-sm font-medium text-gray-600 mb-1">Type</label>
           <select
             name="type"
             value={type}
             onChange={(e) => settype(e.target.value)}
-            className="border p-3 rounded-lg"
+            className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+            required
           >
             <option value="">Select Type</option>
             <option value="expense">Expense</option>
             <option value="income">Income</option>
           </select>
-
-          {/* Category */}
+        </div>
+        <div className="flex-1 flex flex-col">
+          <label className="text-sm font-medium text-gray-600 mb-1">Category</label>
           <select
             name="category"
             value={category}
             onChange={(e) => setcategory(e.target.value)}
-            className="border p-3 rounded-lg"
+            className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
           >
             <option value="">Select Category</option>
             <option value="Transfer">Transfer</option>
@@ -237,49 +251,55 @@ const Page = () => {
             <option value="Transport">Transport</option>
             <option value="Others">Others</option>
           </select>
-
-          {/* Date */}
-          <input
-            type="date"
-            name="date"
-            value={date}
-            onChange={(e) => setdate(e.target.value)}
-            className="border p-3 rounded-lg"
-            required
-          />
-
-          {/* Description */}
-          <textarea
-            name="description"
-            placeholder="Optional description..."
-            value={description}
-            onChange={(e) => setdescription(e.target.value)}
-            className="border p-3 rounded-lg resize-none"
-            rows={3}
-          />
-
-          {/* Buttons */}
-          <div className="flex justify-between gap-3 mt-2">
-            
-            <button
-              type="button"
-              onClick={() => router.back()}
-              className="w-full bg-gray-400 text-white py-2 rounded-lg"
-            >
-              Cancel
-            </button>
-
-            <button
-              type="submit"
-              className="w-full bg-blue-600 text-white py-2 rounded-lg"
-            >
-              Add
-            </button>
-
-          </div>
-        </form>
+        </div>
       </div>
-    </div>
+
+      {/* Date */}
+      <div className="flex flex-col">
+        <label className="text-sm font-medium text-gray-600 mb-1">Date</label>
+        <input
+          type="date"
+          name="date"
+          value={date}
+          onChange={(e) => setdate(e.target.value)}
+          className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+          required
+        />
+      </div>
+
+      {/* Description */}
+      <div className="flex flex-col">
+        <label className="text-sm font-medium text-gray-600 mb-1">Description</label>
+        <textarea
+          name="description"
+          placeholder="Optional description..."
+          value={description}
+          onChange={(e) => setdescription(e.target.value)}
+          rows={3}
+          className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition resize-none"
+        />
+      </div>
+
+      {/* Action Buttons */}
+      <div className="flex gap-3 mt-4">
+        <button
+          type="button"
+          onClick={() => router.back()}
+          className="flex-1 py-3 rounded-xl bg-gray-100 hover:bg-gray-200 font-medium transition"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          className="flex-1 py-3 rounded-xl bg-indigo-600 text-white hover:bg-indigo-700 font-semibold transition"
+        >
+          Add Transaction
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>
   )
 }
 

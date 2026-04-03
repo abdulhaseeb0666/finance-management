@@ -100,212 +100,229 @@ const DashboardContent = () => {
     }
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-100">
-      {/* Top Bar */}
-      <header className="bg-white shadow p-4 flex justify-between items-center">
-        <h1 className="text-2xl font-semibold">Welcome, {name}!</h1>
-        <div className="flex items-center gap-4">
-          <button 
+    <div className="min-h-screen bg-[#0B0F19] text-white flex">
+
+      {/* SIDEBAR (NEW) */}
+      <aside className="hidden md:flex flex-col w-64 p-6 border-r border-white/10 bg-white/5 backdrop-blur-xl">
+        <h1 className="text-2xl font-bold mb-10">FinanceAI</h1>
+
+        <nav className="flex flex-col gap-4 text-gray-400">
+          <span className="text-white font-medium">Dashboard</span>
+          <span className="hover:text-white cursor-pointer">Accounts</span>
+          <span className="hover:text-white cursor-pointer">Transactions</span>
+          <span className="hover:text-white cursor-pointer">Budgets</span>
+        </nav>
+      </aside>
+
+      {/* MAIN */}
+      <div className="flex-1 flex flex-col">
+
+        {/* TOP BAR */}
+        <header className="flex justify-between items-center p-6 border-b border-white/10 bg-white/5 backdrop-blur-xl">
+          <h1 className="text-xl font-semibold">
+            Welcome back, <span className="text-indigo-400">{name}</span> 👋
+          </h1>
+
+          <button
             onClick={() => {
               localStorage.removeItem("login");
-              router.push("/")
-            }} 
-            className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 hover:cursor-pointer"
+              router.push("/");
+            }}
+            className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 transition"
           >
             Logout
           </button>
-        </div>
-      </header>
+        </header>
 
-      {/* Main Content */}
-      <main className="flex-1 p-6 space-y-6 overflow-y-auto">
-        {/* Accounts Section */}
-        <section className="bg-white p-6 rounded shadow">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold">Accounts</h2>
-            <button
-              onClick={addAccount}
-              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-            >
-              Add Account
-            </button>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {
-              accounts?.length === 0 && (
-                <p className="text-gray-500 text-center col-span-full">
-                  No accounts found. Please add an account.
-                </p>
-              )
-            }
-            {
-            accounts?.map((acc, idx) => (
-              <div
-                key={idx}
-                className="p-4 rounded shadow bg-gray-50 flex justify-between items-center"
+        {/* CONTENT */}
+        <main className="p-6 space-y-6">
+
+          {/* ACCOUNTS */}
+          <section className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl">
+            <div className="flex justify-between mb-4">
+              <h2 className="text-lg font-semibold">Accounts</h2>
+              <button
+                onClick={addAccount}
+                className="px-4 py-2 rounded-xl bg-indigo-500 hover:bg-indigo-600 transition"
               >
-                <div>
-                  <h3 className="font-semibold text-lg">{acc?.name}</h3>
-                  <p className="text-gray-600">
-                    Balance: {acc.balance.toLocaleString()} {user?.currency}
+                + Add
+              </button>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {
+                accounts?.length === 0 ? <h2 className="text-gray-400">No accounts found.</h2> :
+                  accounts?.map((acc, idx) => (
+                <div
+                  key={idx}
+                  className="p-4 rounded-xl bg-white/5 border border-white/10 flex justify-between items-center hover:bg-white/10 transition"
+                >
+                  <div>
+                    <h3 className="font-medium">{acc.name}</h3>
+                    <p className="text-gray-400 text-sm">
+                      {acc.balance.toLocaleString()} {user?.currency}
+                    </p>
+                  </div>
+
+                  <Trash
+                    className="cursor-pointer hover:text-red-400"
+                    onClick={() => deleteAccount(acc.id)}
+                  />
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* TRANSACTIONS */}
+          <section className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl">
+            <div className="flex justify-between mb-4">
+              <h2 className="text-lg font-semibold">Recent Transactions</h2>
+              <button
+                onClick={addTransaction}
+                className="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-600"
+              >
+                + Add
+              </button>
+            </div>
+
+            <div className="space-y-3">
+              {
+                transactions?.length === 0 ? <h2 className="text-gray-400">No transactions found.</h2> :
+                transactions?.slice(-5).map((txn, idx) => (
+                <div
+                  key={idx}
+                  className="flex justify-between p-4 rounded-xl bg-white/5 border border-white/10"
+                >
+                  <div>
+                    <p>{txn.category}</p>
+                    <span className="text-sm text-gray-400">{txn.date}</span>
+                  </div>
+
+                  <p className={txn.type === "income" ? "text-green-400" : "text-red-400"}>
+                    {txn.type === "income" ? "+" : "-"}
+                    {txn.amount}
                   </p>
                 </div>
-                <button 
-                  id={acc.id}
-                  onClick={() => {
-                    deleteAccount(acc.id)
-                  }}
-                  className=" text-white  rounded-full h-fit w-fitflex justify-center items-center hover:cursor-pointer">
-                <Trash size={24} color="black" strokeWidth={2}  />
-                </button>
-              </div>
-            ))}
-          </div>
-        </section>
+              ))}
+            </div>
 
-        {/* Transactions Section */}
-        <section className="bg-white p-6 rounded shadow flex flex-col gap-4">
-          <div className="flex justify-between items-center">
-            <h2 className="text-xl font-semibold">Recent Transactions</h2>
-            <button 
-              onClick={() => {
-                addTransaction();
-              }}
-              className="bg-emerald-600 px-5 py-2 text-white text-sm font-bold rounded-xl hover:cursor-pointer">Add Transaction</button>
-          </div>
-          {transactions?.length === 0 ? (
-              <p className="text-gray-500 text-center">
-                No transactions found. Please add a transaction.
+            <div className="flex justify-end mt-4">
+              <Link href={`/dashboard/all-transactions?name=${name}&email=${email}`}>
+                <button className="text-indigo-400 hover:underline">
+                  View All →
+                </button>
+              </Link>
+            </div>
+          </section>
+
+          {/* Budget Section */}
+          <section className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-lg font-semibold">Budgets</h2>
+
+              <Link href={`/dashboard/add-budget?name=${name}&email=${email}`}>
+                <button className="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-600 transition">
+                  + Add Budget
+                </button>
+              </Link>
+            </div>
+
+            {user?.budgets.length === 0 ? (
+              <p className="text-gray-400 text-sm">
+                No budgets found. Start by adding one.
               </p>
             ) : (
-              <>
-                <div className="overflow-x-auto rounded-2xl">
-                  <table className="w-full text-left border-bs-zinc-950">
-                    <thead>
-                      <tr className="bg-gray-300">
-                        <th className="p-2">Date</th>
-                        <th className="p-2">Category</th>
-                        <th className="p-2">Description</th>
-                        <th className="p-2 text-right">Amount</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {
-                        transactions?.slice(transactions.length - 5 , transactions.length).map((txn, idx) => (
-                          <tr key={idx} className="border-b">
-                            <td className="p-2">{txn.date}</td>
-                            <td className="p-2">{txn.category}</td>
-                            <td className="p-2">{txn.description}</td>
-                            {
-                              txn.type === "income" ? (
-                                <td className="p-2 text-green-600 text-right">+{txn.amount.toLocaleString()} {user?.currency}</td>
-                              ) : (
-                                <td className="p-2 text-red-600 text-right">-{txn.amount.toLocaleString()} {user?.currency}</td>
-                              )
-                            }
-                          </tr>
-                        ))
-                      }
-                    </tbody>
-                  </table>
-                </div>
-                <div className="w-full flex justify-end">
-                  <Link href={`/dashboard/all-transactions?name=${name}&email=${email}`}>
-                    <button type="button" 
-                      className="bg-blue-600 px-2 py-1 rounded-xl text-white font-medium hover:bg-blue-700 hover:cursor-pointer"
+              <div className="grid md:grid-cols-2 gap-4">
+                {user?.budgets.map((budget, idx) => {
+                  const percentage = (budget.spent / budget.limit) * 100;
+                  const remaining = budget.limit - budget.spent;
+
+                  return (
+                    <div
+                      key={idx}
+                      className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-3"
                     >
-                      View All Transactions
-                    </button>
-                  </Link>
-                </div>
-              </>
-          )}
-        </section>
+                      {/* Top */}
+                      <div className="flex justify-between items-center">
+                        <h3 className="font-medium">{budget.category}</h3>
 
-        {/* Budget Section */}
-        <section className="bg-white p-6 rounded shadow">
-          <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold">Budget</h2>
-          <Link href={`/dashboard/add-budget?name=${name}&email=${email}`}>
-            <button 
-              type="button" 
-              className="bg-emerald-600 px-5 py-2 text-white text-sm font-bold rounded-xl hover:cursor-pointer"
-            >
-              Add Budget
-            </button>
-          </Link>
-          </div>
-          <div className="flex flex-col rounded-2xl overflow-x-auto">
-            {
-              user?.budgets.length === 0 ? (
-                <p className="text-gray-500">No budgets found. Please add a budget.</p>
+                        <Trash
+                          className="cursor-pointer hover:text-red-400"
+                          onClick={() => deleteBudget(budget.category)}
+                        />
+                      </div>
+
+                      {/* Numbers */}
+                      <div className="text-sm text-gray-400">
+                        <p>
+                          {budget.spent.toLocaleString()} / {budget.limit.toLocaleString()} {user?.currency}
+                        </p>
+                        <p className={remaining < 0 ? "text-red-400" : "text-gray-400"}>
+                          Remaining: {remaining.toLocaleString()} {user?.currency}
+                        </p>
+                      </div>
+
+                      {/* Progress Bar */}
+                      <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
+                        <div
+                          className={`h-full ${
+                            percentage > 100
+                              ? "bg-red-500"
+                              : percentage > 75
+                              ? "bg-yellow-400"
+                              : "bg-emerald-400"
+                          }`}
+                          style={{ width: `${Math.min(percentage, 100)}%` }}
+                        />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </section>
+
+          {/* BOTTOM GRID */}
+          <section className="flex flex-col xl:flex-row justify-between gap-10">
+
+            {/* INSIGHTS CARD */}
+            <div className="p-6 w-full rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 shadow-lg hover:scale-[1.02] transition-transform">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="font-semibold text-lg">Insights</h3>
+                {insigts?.some(i => i.type === "Budget Alert") && (
+                  <span className="text-xs bg-red-500/20 text-red-400 px-2 py-1 rounded-full">
+                    Alerts
+                  </span>
+                )}
+              </div>
+              {insigts?.slice(-5).length === 0 ? (
+                <p className="text-gray-400 text-sm">No insights found. Add a transaction to see insights.</p>
               ) : (
-                <table>
-                  <thead className="bg-gray-300">
-                    <tr>
-                      <th className="p-2 text-left">Category</th>
-                      <th className="p-2 text-left">Limit</th>
-                      <th className="p-2 text-left">Spent</th>
-                      <th className="p-2 text-left">Remaining</th>
-                      <th className="p-2 text-right">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {
-                      user?.budgets.map((budget , idx) => {
-                        return (
-                          <tr key={idx} className="border-b">
-                            <td className="p-2">{budget.category}</td>
-                            <td className="p-2">{budget.limit.toLocaleString()} {user?.currency}</td>
-                            <td className="p-2">{budget.spent.toLocaleString()} {user?.currency}</td>
-                            <td className="p-2">{(budget.limit - budget.spent).toLocaleString()} {user?.currency}</td>
-                            <td className="p-2 flex justify-end"> <Trash size={24} color="black" strokeWidth={2} className="hover:cursor-pointer" onClick={() => deleteBudget(budget.category)} /> </td>
-                          </tr>
-                        )
-                      })
-                    }
-                  </tbody>
-                </table>
-              )
-            }
-          </div>
-        </section>
+                <ul className="space-y-2 text-gray-300 text-sm">
+                  {insigts?.slice(-5).map((i, idx) => (
+                    <li key={idx} className={`${i.type === "Budget Alert" ? "text-red-400 font-medium" : ""}`}>
+                      • {i.message}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
 
-        {/* Insights / Monthly Summary / Spendings */}
-        <section className="flex gap-4">
-          <div className="bg-white p-6 rounded shadow w-[30%]">
-            <h3 className="font-semibold mb-2">Insights</h3>
-            {
-              insigts?.length === 0 ? (
-                <p className="text-gray-600">No insights found. Please add a transaction.</p>
-              ) : (
-                insigts?.slice(insigts.length - 5 , insigts.length).map((insight , idx) => (
-                <p key={idx} className={`text-gray-600 ${insight.type == "Budget Alert" ? "text-red-600" : ""}`}>- {insight.message}</p>
-              ))
-              )
-            }
-          </div>
-          <div className="bg-white p-6 rounded shadow w-[30%]">
-            <h3 className="font-semibold mb-2">Monthly Summary</h3>
-            <p className="text-gray-600">Total income: $5,000, Total spending: $2,345</p>
-          </div>
+            {/* SPENDING PIE CHART CARD */}
+            <div className="p-6 w-full rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 shadow-lg hover:scale-[1.02] transition-transform flex flex-col items-center">
+              <h3 className="font-semibold text-lg mb-4">Spending Breakdown</h3>
+              <div className="w-full h-64 flex justify-center items-center">
+                <SpendingPieChart name={String(name)} email={String(email)} />
+              </div>
+              <p className="mt-4 flex items-center justify-center text-gray-400 text-sm text-center">
+                Visual representation of your spending by category.
+              </p>
+            </div>
 
-          <div className="bg-white p-6 rounded shadow w-[40%]">
-            <h3 className="font-semibold mb-2">Spendings</h3>
-            {
-              user?.spendingByCategory.length === 0 ? (
-                <p className="text-gray-600">No spending found. Please add a transaction.</p>
-              ) : (
-                user?.spendingByCategory.slice(user.spendingByCategory.length - 4 , user.spendingByCategory.length).map((spending , idx) => (
-                  <p key={idx} className="text-gray-600" >- {spending.name}: ${spending.value.toLocaleString()}</p>
-                ))
-              )
-            }
+          </section>
 
-            <SpendingPieChart name={String(name)} email={String(email)} />
-          </div>
-        </section>
-      </main>
+        </main>
+      </div>
     </div>
   )
 }

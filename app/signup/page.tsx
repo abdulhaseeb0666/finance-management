@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import type {User} from "../context/FinanceContext";
-
+import {motion} from "framer-motion"
 
 export default function SignupPage() {
 
@@ -70,75 +70,106 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-      <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg">
-        
-        <h1 className="text-3xl font-bold text-center mb-2">
-          Create Account
-        </h1>
-        <p className="text-gray-500 text-center mb-6">
-          Start managing your finances today
-        </p>
+    <div className="min-h-screen grid md:grid-cols-2 bg-[#0B0F19] text-white">
 
-        {
-            error && <p className="text-red-500 text-center -mt-5 mb-2">{error}</p>
-        }
+      {/* LEFT SIDE (BRANDING) */}
+      <div className="hidden md:flex flex-col justify-center items-center relative overflow-hidden">
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          
-          <input
-            type="text"
-            name="name"
-            placeholder="Full Name"
-            value={name}
-            onChange={(e) => setname(e.target.value)}
-            className="w-full border p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          />
+        {/* Glow Background */}
+        <div className="absolute inset-0 bg-linear-to-br from-indigo-500/20 via-purple-500/10 to-cyan-500/20 blur-3xl" />
 
-          <input
-            type="email"
-            name="email"
-            placeholder="Email Address"
-            value={email}
-            onChange={(e) => setemail(e.target.value)}
-            className="w-full border p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          />
+        {/* ✨ Gradient Fade to Right */}
+        <div className="absolute right-0 top-0 h-full w-32 bg-linear-to-r from-transparent to-[#0B0F19]" />
 
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setpassword(e.target.value)}
-            className="w-full border p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          />
+        <div className="relative z-10 text-center px-10">
+          <h1 className="text-5xl font-bold mb-6 leading-tight">
+            Join the Future of <br />
+            <span className="text-indigo-400">Finance</span>
+          </h1>
 
-          <input
-            type="password"
-            name="confirmPassword"
-            placeholder="Confirm Password"
-            value={confirmPassword}
-            onChange={(e) => setconfirmPassword(e.target.value)}
-            className="w-full border p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          />
+          <p className="text-gray-300">
+            Smart insights, powerful analytics, and total control over your money.
+          </p>
+        </div>
+      </div>
 
-          <button
-            type="submit"
-            className="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition"
-          >
-            {signup}
-          </button>
-        </form>
+      {/* RIGHT SIDE (FORM) */}
+      <div className="flex items-center justify-center px-6">
 
-        <p className="text-sm text-center text-gray-500 mt-6">
-          Already have an account?{" "}
-          <span
-            onClick={() => router.push("/login")}
-            className="text-indigo-600 cursor-pointer font-medium"
-          >
-            Login
-          </span>
-        </p>
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="w-full max-w-md bg-white/5 backdrop-blur-xl border border-white/10 p-8 rounded-2xl shadow-xl"
+        >
+
+          {/* Heading */}
+          <h2 className="text-3xl font-bold text-center mb-2">
+            Create Account
+          </h2>
+          <p className="text-gray-400 text-center mb-6">
+            Start managing your finances today
+          </p>
+
+          {/* Error */}
+          {error && (
+            <p className="text-red-400 text-center mb-4">{error}</p>
+          )}
+
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="space-y-4">
+
+            <input
+              type="text"
+              placeholder="Full Name"
+              value={name}
+              onChange={(e) => setname(e.target.value)}
+              className="w-full p-3 rounded-xl bg-transparent border border-white/10 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+
+            <input
+              type="email"
+              placeholder="Email Address"
+              value={email}
+              onChange={(e) => setemail(e.target.value)}
+              className="w-full p-3 rounded-xl bg-transparent border border-white/10 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setpassword(e.target.value)}
+              className="w-full p-3 rounded-xl bg-transparent border border-white/10 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+
+            <input
+              type="password"
+              placeholder="Confirm Password"
+              value={confirmPassword}
+              onChange={(e) => setconfirmPassword(e.target.value)}
+              className="w-full p-3 rounded-xl bg-transparent border border-white/10 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+
+            <button
+              type="submit"
+              className="w-full py-3 rounded-xl bg-indigo-500 hover:bg-indigo-600 transition hover:scale-105 font-semibold shadow-lg shadow-indigo-500/30"
+            >
+              {signup}
+            </button>
+          </form>
+
+          {/* Footer */}
+          <p className="text-sm text-center text-gray-400 mt-6">
+            Already have an account?{" "}
+            <span
+              onClick={() => router.push("/login")}
+              className="text-indigo-400 cursor-pointer font-medium hover:underline"
+            >
+              Login
+            </span>
+          </p>
+
+        </motion.div>
       </div>
     </div>
   );

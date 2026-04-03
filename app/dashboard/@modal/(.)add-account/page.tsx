@@ -59,62 +59,65 @@ const Page = () => {
 
     return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
-      {/* Overlay */}
-      <div
-        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-        onClick={() => router.back()}
+
+  {/* Overlay */}
+  <div
+    className="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity"
+    onClick={() => router.back()}
+  />
+
+  {/* Modal */}
+  <div className="relative bg-white/90 backdrop-blur-md w-96 p-8 rounded-3xl shadow-2xl z-10 animate-fadeIn">
+    <h2 className="text-2xl font-bold text-center mb-6">Add Account</h2>
+
+    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+
+      {/* Account Name */}
+      <input
+        type="text"
+        placeholder="Account Name"
+        value={accountname}
+        onChange={(e) => setaccountname(e.target.value)}
+        className="border border-gray-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-400 transition"
+        required
       />
 
-      {/* Modal */}
-      <div className="relative bg-white w-96 p-6 rounded-2xl shadow-xl z-10">
-        <h2 className="text-2xl font-semibold mb-4">Add Account</h2>
+      {/* Account Type */}
+      <select
+        value={accounttype}
+        onChange={(e) => setaccounttype(e.target.value)}
+        className="border border-gray-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-400 transition"
+        required
+      >
+        <option value="">Select Account Type</option>
+        <option value="checking">Checking</option>
+        <option value="savings">Savings</option>
+        <option value="credit">Credit</option>
+      </select>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          
-          {/* Account Name */}
-          <input
-            type="text"
-            placeholder="Account Name"
-            value={accountname}
-            onChange={(e) => setaccountname(e.target.value)}
-            className="border p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
-          />
+      {error && <p className="text-red-500 text-center">{error}</p>}
 
-          {/* Account Type */}
-          <select
-            value={accounttype}
-            onChange={(e) => setaccounttype(e.target.value)}
-            className="border p-3 rounded-lg"
-          >
-            <option value="">Select Account Type</option>
-            <option value="checking">Checking</option>
-            <option value="savings">Savings</option>
-            <option value="credit">Credit</option>
-          </select>
+      {/* Buttons */}
+      <div className="flex gap-4 mt-4">
+        <button
+          type="button"
+          onClick={() => router.back()}
+          className="flex-1 py-3 rounded-xl bg-gray-300 text-gray-700 font-medium hover:bg-gray-400 transition"
+        >
+          Cancel
+        </button>
 
-          {error && <p className="text-red-500">{error}</p>}
-
-          {/* Buttons */}
-          <div className="flex gap-3 mt-2">
-            <button
-              type="button"
-              onClick={() => router.back()}
-              className="flex-1 bg-gray-400 text-white py-2 rounded-lg"
-            >
-              Cancel
-            </button>
-
-            <button
-              type="submit"
-              className="flex-1 bg-blue-600 text-white py-2 rounded-lg"
-            >
-              Add
-            </button>
-          </div>
-        </form>
+        <button
+          type="submit"
+          className="flex-1 py-3 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700 transition"
+        >
+          Add Account
+        </button>
       </div>
-    </div>
+
+    </form>
+  </div>
+</div>
   )
 }
 

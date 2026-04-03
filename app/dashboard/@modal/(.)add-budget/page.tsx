@@ -68,88 +68,93 @@ const Page = () => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
 
-        <div className="absolute inset-0 bg-black/50 z-0 backdrop-blur-sm"
-            onClick={() => {router.back()}}    
-        />
+  {/* Overlay */}
+  <div
+    className="absolute inset-0 bg-black/40 backdrop-blur-md transition-opacity"
+    onClick={() => router.back()}
+  />
 
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-6 z-10">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-semibold">Add Budget</h2>
-          <button onClick={() => {router.back()}} className="p-2 rounded-full hover:bg-gray-100 hover:cursor-pointer">
-            <X size={20}/>
-          </button>
-        </div>
+  {/* Modal Card */}
+  <div className="relative w-full max-w-md bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl p-6 z-10 animate-fadeIn">
 
-        {
-            error && <p className="text-red-500 mb-4">{error}</p>
-        }
-
-        {/* Form */}
-        <form onSubmit={handleSubmit}>
-            <div className="space-y-4">
-            {/* Category */}
-            <div>
-                <label className="text-sm text-gray-600">Category</label>
-                <select 
-                    value={category}
-                    onChange={(e) => setCategory(e.target.value)}
-                    className="w-full mt-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
-                >
-                    <option value="">Select Category</option>
-                    <option value="Transfer">Transfer</option>
-                    <option value="Food">Food</option>
-                    <option value="Shopping">Shopping</option>
-                    <option value="Transport">Transport</option>
-                    <option value="Others">Others</option>
-                </select>
-            </div>
-
-            {/* Limit */}
-            <div>
-                <label className="text-sm text-gray-600">Budget Limit</label>
-                <input
-                type="number"
-                placeholder="Enter limit"
-                value={limit}
-                onChange={(e) => setLimit(e.target.value)}
-                className="w-full mt-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
-                />
-            </div>
-
-            {/* Spendings */}
-            <div>
-                <label className="text-sm text-gray-600">Current Spendings</label>
-                <input
-                type="number"
-                placeholder="Enter spendings"
-                value={spendings}
-                onChange={(e) => setSpendings(e.target.value)}
-                className="w-full mt-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
-                />
-            </div>
-            </div>
-
-            {/* Actions */}
-            <div className="mt-6 flex justify-end gap-3">
-            <button
-                className="px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200"
-                onClick={() => {
-                    router.back();
-                }}
-            >
-                Cancel
-            </button>
-            <button
-                type="submit"
-                className="px-4 py-2 rounded-lg bg-black text-white hover:bg-gray-800"
-            >
-                Save Budget
-            </button>
-            </div>
-        </form>
-      </div>
+    {/* Header */}
+    <div className="flex items-center justify-between mb-6 border-b border-gray-200 pb-3">
+      <h2 className="text-2xl font-bold text-gray-800">Add Budget</h2>
+      <button
+        onClick={() => router.back()}
+        className="p-2 rounded-full hover:bg-gray-100 transition"
+      >
+        <X size={22} />
+      </button>
     </div>
+
+    {/* Error Message */}
+    {error && <p className="text-red-500 mb-4 text-center">{error}</p>}
+
+    {/* Form */}
+    <form onSubmit={handleSubmit} className="space-y-5">
+
+      {/* Category */}
+      <div className="flex flex-col">
+        <label className="text-sm font-medium text-gray-600 mb-1">Category</label>
+        <select
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+          className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+        >
+          <option value="">Select Category</option>
+          <option value="Transfer">Transfer</option>
+          <option value="Food">Food</option>
+          <option value="Shopping">Shopping</option>
+          <option value="Transport">Transport</option>
+          <option value="Others">Others</option>
+        </select>
+      </div>
+
+      {/* Budget Limit */}
+      <div className="flex flex-col">
+        <label className="text-sm font-medium text-gray-600 mb-1">Budget Limit</label>
+        <input
+          type="number"
+          placeholder="Enter limit"
+          value={limit}
+          onChange={(e) => setLimit(e.target.value)}
+          className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+        />
+      </div>
+
+      {/* Current Spendings */}
+      <div className="flex flex-col">
+        <label className="text-sm font-medium text-gray-600 mb-1">Current Spendings</label>
+        <input
+          type="number"
+          placeholder="Enter spendings"
+          value={spendings}
+          onChange={(e) => setSpendings(e.target.value)}
+          className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+        />
+      </div>
+
+      {/* Actions */}
+      <div className="flex justify-end gap-4 mt-6">
+        <button
+          type="button"
+          onClick={() => router.back()}
+          className="px-6 py-3 rounded-xl bg-gray-100 hover:bg-gray-200 font-medium transition"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          className="px-6 py-3 rounded-xl bg-indigo-600 text-white hover:bg-indigo-700 font-semibold transition"
+        >
+          Save Budget
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>
   )
 }
 
