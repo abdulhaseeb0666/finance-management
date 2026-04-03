@@ -104,7 +104,7 @@ const DashboardContent = () => {
 
       {/* SIDEBAR (NEW) */}
       <aside className="hidden md:flex flex-col w-64 p-6 border-r border-white/10 bg-white/5 backdrop-blur-xl">
-        <h1 className="text-2xl font-bold mb-10">FinanceAI</h1>
+        <h1 className="text-2xl font-bold mb-10">Monetra</h1>
 
         <nav className="flex flex-col gap-4 text-gray-400">
           <span className="text-white font-medium">Dashboard</span>
