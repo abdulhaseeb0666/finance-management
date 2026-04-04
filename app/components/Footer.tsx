@@ -9,16 +9,16 @@ const Footer = () => {
             </p>
 
             {/* Right: Links */}
-            <div className="flex gap-4">
-            <a
+            <div className="flex gap-10">
+            <a 
                 href="/login"
-                className="text-indigo-400 hover:text-indigo-500 text-sm font-medium transition"
+                className="text-indigo-400 hover:text-indigo-500 text-md font-semibold transition"
             >
                 Login
             </a>
             <a
                 href="/signup"
-                className="text-indigo-400 hover:text-indigo-500 text-sm font-medium transition"
+                className="text-indigo-400 hover:text-indigo-500 text-md font-semibold transition"
             >
                 Sign Up
             </a>
