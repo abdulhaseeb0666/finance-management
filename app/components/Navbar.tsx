@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import {Menu , X} from "lucide-react";
-
+import { Landmark } from "lucide-react";
 
 const Navbar = () => {
   
@@ -14,8 +14,9 @@ const Navbar = () => {
       <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
 
         {/* Logo */}
-        <div className="text-white text-2xl sm:text-3xl md:text-4xl font-bold cursor-pointer hover:scale-105 transition-transform">
-          Monetra
+        <div className="text-white text-2xl sm:text-3xl md:text-4xl font-bold cursor-pointer hover:scale-105 transition-transform flex items-center gap-4">
+          <Landmark size={50} />
+          <h1>Monetra</h1>
         </div>
 
         {/* Desktop Links */}
