@@ -9,8 +9,9 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   
   return (
-<nav className="w-full bg-linear-to-r from-indigo-950 via-pink-950 to-purple-950 shadow-lg">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+<nav className="relative z-10 w-full bg-[#0B0F19] shadow-[0px_2px_25px_rgba(168,85,247,0.5)]">
+      <div className="absolute z-10 inset-0 bg-linear-to-r from-indigo-600 via-cyan-600 to-purple-600 blur-3xl" />
+      <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
 
         {/* Logo */}
         <div className="text-white text-2xl sm:text-3xl md:text-4xl font-bold cursor-pointer hover:scale-105 transition-transform">

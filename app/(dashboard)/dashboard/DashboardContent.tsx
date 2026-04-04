@@ -170,10 +170,10 @@ monthlyData?.sort((a, b) => {
         <h1 className="text-2xl font-bold mb-10">Monetra</h1>
 
         <nav className="flex flex-col gap-4 text-gray-400">
-          <span className="text-white font-medium">Dashboard</span>
-          <span className="hover:text-white cursor-pointer">Accounts</span>
-          <span className="hover:text-white cursor-pointer">Transactions</span>
-          <span className="hover:text-white cursor-pointer">Budgets</span>
+          <span className="hover:text-white font-medium"><a href="#">Dashboard</a></span>
+          <span className="hover:text-white font-medium"><a href="#accounts">Accounts</a></span>
+          <span className="hover:text-white font-medium"><a href="#transactions">Transactions</a></span>
+          <span className="hover:text-white font-medium"><a href="#budget">Budgets</a></span>
         </nav>
       </aside>
 
@@ -201,7 +201,7 @@ monthlyData?.sort((a, b) => {
         <main className="p-6 space-y-6">
 
           {/* ACCOUNTS */}
-          <section className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl hover:shadow-[2px_2px_10px_rgba(99,102,241,0.25)]">
+          <section id="accounts" className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl hover:shadow-[2px_2px_10px_rgba(99,102,241,0.25)]">
             <div className="flex justify-between mb-4">
               <h2 className="text-lg font-semibold">Accounts</h2>
               <button
@@ -237,7 +237,7 @@ monthlyData?.sort((a, b) => {
           </section>
 
           {/* KPI CARDS (NEW - BIG UPGRADE) */}
-          <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <section id="kpi" className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
             <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl hover:shadow-[2px_2px_10px_rgba(99,102,241,0.25)]">
               <p className="text-gray-400 text-sm">Total Balance</p>
@@ -318,7 +318,7 @@ monthlyData?.sort((a, b) => {
           </div>
 
           {/* TRANSACTIONS */}
-          <section className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl hover:shadow-[2px_2px_10px_rgba(99,102,241,0.25)]">
+          <section id="transactions" className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl hover:shadow-[2px_2px_10px_rgba(99,102,241,0.25)]">
             <div className="flex justify-between mb-4">
               <h2 className="text-lg font-semibold">Recent Transactions</h2>
               <button
@@ -360,7 +360,7 @@ monthlyData?.sort((a, b) => {
           </section>
 
           {/* Budget Section */}
-          <section className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl hover:shadow-[2px_2px_10px_rgba(99,102,241,0.25)]">
+          <section id="budget" className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl hover:shadow-[2px_2px_10px_rgba(99,102,241,0.25)]">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-lg font-semibold">Budgets</h2>
 
