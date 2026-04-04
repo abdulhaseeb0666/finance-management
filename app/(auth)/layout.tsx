@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { FinanceProvider } from "./context/FinanceContext";
-import "./globals.css";
-import Footer from "./components/Footer";
-import Navbar from "./components/Navbar";
+import { FinanceProvider } from "../context/FinanceContext";
+import "../../app/globals.css";
+import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
 
 export const metadata: Metadata = {
   title: "Finance App",

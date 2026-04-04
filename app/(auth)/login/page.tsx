@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation";
-import type {FinanceContextType} from "../context/FinanceContext"
+import type {FinanceContextType} from "../../context/FinanceContext"
 import { motion } from "framer-motion"
 
 const Page = () => {

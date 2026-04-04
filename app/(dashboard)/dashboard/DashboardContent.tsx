@@ -1,12 +1,12 @@
 "use client";
 
 import { useSearchParams } from "next/navigation"
-import type { FinanceContextType , User} from "../context/FinanceContext"
+import type { FinanceContextType , User} from "../../context/FinanceContext"
 import { useEffect, useState } from "react";
 import { Trash } from 'lucide-react';
 import { useRouter } from "next/navigation";
 import Link from 'next/link';
-import SpendingPieChart from "../components/(real)/SpendingPieChart";
+import SpendingPieChart from "../../components/(real)/SpendingPieChart";
 
 const DashboardContent = () => {
   

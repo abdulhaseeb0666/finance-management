@@ -1,12 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import MonthlyLineChart from "./components/(dummy)/MonthlyLineChart";
-import SpendingPieChart from "./components/(dummy)/SpendingPieChart";
-import { financeData } from "./data/financeData";
+import MonthlyLineChart from "../components/(dummy)/MonthlyLineChart";
+import SpendingPieChart from "../components/(dummy)/SpendingPieChart";
+import { financeData } from "../data/financeData";
 
 import { use, useContext, useEffect, useState } from "react";
-import { FinanceContext , FinanceContextType } from "./context/FinanceContext";
+import { FinanceContext , FinanceContextType } from "../context/FinanceContext";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 

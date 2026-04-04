@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import type {User} from "../context/FinanceContext";
+import type {User} from "../../context/FinanceContext";
 import {motion} from "framer-motion"
 
 export default function SignupPage() {

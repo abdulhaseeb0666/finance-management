@@ -2,7 +2,7 @@
 
 import { useState , useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import type { FinanceContextType } from "../context/FinanceContext";
+import type { FinanceContextType } from "../../context/FinanceContext";
 import Link from "next/link";
 
 export default function DashboardPage() {
