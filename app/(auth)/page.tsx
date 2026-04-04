@@ -92,7 +92,7 @@ export default function LandingPage() {
 
       </section>
 
-      {/* TRANSACTIONS (MODERN CARDS) */}
+      {/* TRANSACTIONS */}
       <section className="px-10">
         <h2 className="text-2xl font-semibold mb-6">Recent Transactions</h2>
 
@@ -128,8 +128,6 @@ export default function LandingPage() {
       <section className="text-center px-10 pb-10">
         <div className="relative p-12 rounded-2xl bg-linear-to-r from-indigo-500/20 to-purple-500/20 border border-white/10 overflow-hidden">
           
-          <div className="absolute inset-0 bg-indigo-500/10 blur-2xl" />
-
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Take control of your financial future
           </h2>
