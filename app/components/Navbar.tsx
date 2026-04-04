@@ -14,13 +14,34 @@ const Navbar = () => {
       <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
 
         {/* Logo */}
-        <div className="text-white text-2xl sm:text-3xl md:text-4xl font-bold cursor-pointer hover:scale-105 transition-transform flex items-center gap-4">
-          <Landmark size={50} />
-          <h1>Monetra</h1>
+        <div className="group flex items-center gap-3 cursor-pointer transition-all duration-300">
+  
+          {/* Icon */}
+          <div className="p-2 rounded-xl bg-linear-to-br from-indigo-500 via-purple-500 to-pink-500 shadow-lg group-hover:scale-110 transition-all duration-300">
+            <Landmark size={32} className="text-white" />
+          </div>
+
+          {/* Text */}
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold bg-linear-to-r from-indigo-400 via-pink-400 to-purple-400 bg-clip-text text-transparent tracking-wide group-hover:tracking-wider transition-all duration-300">
+            Monetra
+          </h1>
+
         </div>
 
         {/* Desktop Links */}
         <div className="hidden md:flex gap-6">
+          <a
+            href="/about"
+            className="text-white text-lg md:text-xl font-medium px-4 py-2 rounded-lg hover:bg-white/20 transition"
+          >
+            About
+          </a>
+          <a
+            href="/contact"
+            className="text-white text-lg md:text-xl font-medium px-4 py-2 rounded-lg hover:bg-white/20 transition"
+          >
+            Contact
+          </a>
           <a
             href="/login"
             className="text-white text-lg md:text-xl font-medium px-4 py-2 rounded-lg hover:bg-white/20 transition"
@@ -46,7 +67,7 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden px-6 pb-4 flex flex-col gap-4 bg-indigo-950/95 backdrop-blur-md">
+        <div className="md:hidden relative z-10 px-6 pb-4 flex flex-col gap-4 bg-linear-to-r from-indigo-900 via-cyan-900 to-purple-900 overflow-hidden backdrop-blur-md">
           <a
             href="/login"
             className="text-white text-lg font-medium px-4 py-2 rounded-lg hover:bg-white/20 transition"
