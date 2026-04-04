@@ -166,7 +166,7 @@ monthlyData?.sort((a, b) => {
     <div className="min-h-screen bg-[#0B0F19] text-white flex">
 
       {/* SIDEBAR (NEW) */}
-      <aside className="hidden md:flex flex-col w-64 p-6 border-r border-white/10 bg-white/5 backdrop-blur-xl">
+      <aside className="hidden h-[97vh] sticky top-2 md:flex flex-col w-64 p-6 border-r border-white/10 bg-white/5 backdrop-blur-xl m-2 rounded-2xl hover:shadow-[3px_2px_15px_rgba(99,102,241,0.25)]">
         <h1 className="text-2xl font-bold mb-10">Monetra</h1>
 
         <nav className="flex flex-col gap-4 text-gray-400">
@@ -181,7 +181,7 @@ monthlyData?.sort((a, b) => {
       <div className="flex-1 flex flex-col">
 
         {/* TOP BAR */}
-        <header className="flex justify-between items-center p-6 border-b border-white/10 bg-white/5 backdrop-blur-xl">
+        <header className="flex justify-between items-center p-6 border-b border-white/10 bg-white/5 backdrop-blur-xl m-4 rounded-2xl mb-0 hover:shadow-[2px_2px_10px_rgba(99,102,241,0.25)]">
           <h1 className="text-xl font-semibold">
             Welcome back, <span className="text-indigo-400">{name}</span> 👋
           </h1>
@@ -201,7 +201,7 @@ monthlyData?.sort((a, b) => {
         <main className="p-6 space-y-6">
 
           {/* ACCOUNTS */}
-          <section className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl">
+          <section className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl hover:shadow-[2px_2px_10px_rgba(99,102,241,0.25)]">
             <div className="flex justify-between mb-4">
               <h2 className="text-lg font-semibold">Accounts</h2>
               <button
@@ -239,21 +239,21 @@ monthlyData?.sort((a, b) => {
           {/* KPI CARDS (NEW - BIG UPGRADE) */}
           <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-            <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl">
+            <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl hover:shadow-[2px_2px_10px_rgba(99,102,241,0.25)]">
               <p className="text-gray-400 text-sm">Total Balance</p>
               <h2 className="text-2xl font-bold mt-2">
                 ${accounts?.reduce((acc, a) => acc + a.balance, 0).toLocaleString()}
               </h2>
             </div>
 
-            <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl">
+            <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl hover:shadow-[2px_2px_10px_rgba(99,102,241,0.25)]">
               <p className="text-gray-400 text-sm">Total Income</p>
               <h2 className="text-2xl font-bold mt-2 text-green-400">
                 ${transactions?.filter(t => t.type === "income").reduce((a,b)=>a+b.amount,0).toLocaleString()}
               </h2>
             </div>
 
-            <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl">
+            <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl hover:shadow-[2px_2px_10px_rgba(99,102,241,0.25)]">
               <p className="text-gray-400 text-sm">Total Expense</p>
               <h2 className="text-2xl font-bold mt-2 text-red-400">
                 ${transactions?.filter(t => t.type === "expense").reduce((a,b)=>a+b.amount,0).toLocaleString()}
@@ -263,7 +263,7 @@ monthlyData?.sort((a, b) => {
           </section>
 
           {/* Monthly Incoming and Outgoings Chart */}
-          <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl">
+          <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl hover:shadow-[2px_2px_10px_rgba(99,102,241,0.25)]">
   
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-lg font-semibold">Monthly Overview</h2>
@@ -318,7 +318,7 @@ monthlyData?.sort((a, b) => {
           </div>
 
           {/* TRANSACTIONS */}
-          <section className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl">
+          <section className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl hover:shadow-[2px_2px_10px_rgba(99,102,241,0.25)]">
             <div className="flex justify-between mb-4">
               <h2 className="text-lg font-semibold">Recent Transactions</h2>
               <button
@@ -360,7 +360,7 @@ monthlyData?.sort((a, b) => {
           </section>
 
           {/* Budget Section */}
-          <section className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl">
+          <section className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl hover:shadow-[2px_2px_10px_rgba(99,102,241,0.25)]">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-lg font-semibold">Budgets</h2>
 
@@ -430,7 +430,7 @@ monthlyData?.sort((a, b) => {
           <section className="flex flex-col xl:flex-row justify-between gap-10">
 
             {/* INSIGHTS CARD */}
-            <div className="p-6 w-full rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 shadow-lg hover:scale-[1.02] transition-transform">
+            <div className="p-6 w-full rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 shadow-lg hover:scale-[1.02] transition-transform hover:shadow-[2px_2px_10px_rgba(99,102,241,0.25)]">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="font-semibold text-lg">Insights</h3>
                 {insigts?.some(i => i.type === "Budget Alert") && (
@@ -453,7 +453,7 @@ monthlyData?.sort((a, b) => {
             </div>
 
             {/* SPENDING PIE CHART CARD */}
-            <div className="p-6 w-full rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 shadow-lg hover:scale-[1.02] transition-transform flex flex-col items-center">
+            <div className="p-6 w-full rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 shadow-lg hover:scale-[1.02] transition-transform flex flex-col items-center hover:shadow-[2px_2px_10px_rgba(99,102,241,0.25)]">
               <h3 className="font-semibold text-lg mb-4">Spending Breakdown</h3>
               <div className="w-full h-64 flex justify-center items-center">
                 <SpendingPieChart name={String(name)} email={String(email)} />
