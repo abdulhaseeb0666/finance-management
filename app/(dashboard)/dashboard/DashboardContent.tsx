@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { Trash } from 'lucide-react';
 import { useRouter } from "next/navigation";
 import Link from 'next/link';
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
 import SpendingPieChart from "../../components/(real)/SpendingPieChart";
 
 const DashboardContent = () => {
@@ -99,6 +100,68 @@ const DashboardContent = () => {
       }
     }
 
+    const monthlyData = user?.transactions.reduce((acc, txn) => {
+  const date = new Date(txn.date);
+
+  // Format: "Mar 2026" (better than just "Mar")
+  const monthKey = date.toLocaleString("default", {
+    month: "short",
+    year: "numeric",
+  });
+
+  // Check if month already exists
+  let existing = acc.find((item) => item.month === monthKey);
+
+  if (!existing) {
+    existing = {
+      month: monthKey,
+      income: 0,
+      expense: 0,
+    };
+    acc.push(existing);
+  }
+
+  // Add values
+  if (txn.type === "income") {
+    existing.income += txn.amount;
+  } else {
+    existing.expense += txn.amount;
+  }
+
+  return acc;
+}, [] as { month: string; income: number; expense: number }[]);
+
+monthlyData?.sort((a, b) => {
+  return new Date(a.month).getTime() - new Date(b.month).getTime();
+});
+
+  const generateMonths = (data: any[]) => {
+  const months = [];
+
+  const now = new Date();
+  for (let i = 5; i >= 0; i--) {
+    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    const key = d.toLocaleString("default", { month: "short", year: "numeric" });
+
+    const found = data.find((m) => m.month === key);
+
+    months.push(
+      found || {
+        month: key,
+        income: 0,
+        expense: 0,
+      }
+    );
+  }
+
+  return months;
+};
+
+  let finalMonthlyData = [];
+  if(monthlyData){
+    finalMonthlyData = generateMonths(monthlyData);
+  }
+
   return (
     <div className="min-h-screen bg-[#0B0F19] text-white flex">
 
@@ -172,6 +235,87 @@ const DashboardContent = () => {
               ))}
             </div>
           </section>
+
+          {/* KPI CARDS (NEW - BIG UPGRADE) */}
+          <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+            <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl">
+              <p className="text-gray-400 text-sm">Total Balance</p>
+              <h2 className="text-2xl font-bold mt-2">
+                ${accounts?.reduce((acc, a) => acc + a.balance, 0).toLocaleString()}
+              </h2>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl">
+              <p className="text-gray-400 text-sm">Total Income</p>
+              <h2 className="text-2xl font-bold mt-2 text-green-400">
+                ${transactions?.filter(t => t.type === "income").reduce((a,b)=>a+b.amount,0).toLocaleString()}
+              </h2>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl">
+              <p className="text-gray-400 text-sm">Total Expense</p>
+              <h2 className="text-2xl font-bold mt-2 text-red-400">
+                ${transactions?.filter(t => t.type === "expense").reduce((a,b)=>a+b.amount,0).toLocaleString()}
+              </h2>
+            </div>
+
+          </section>
+
+          {/* Monthly Incoming and Outgoings Chart */}
+          <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl">
+  
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-lg font-semibold">Monthly Overview</h2>
+            </div>
+
+            {(!monthlyData || monthlyData.length === 0) ? (
+              <div className="h-62.5 flex items-center justify-center text-gray-400">
+                No transaction data available
+              </div>
+            ) : (
+              <ResponsiveContainer width="100%" height={250}>
+                <LineChart data={finalMonthlyData}>
+                  
+                  <CartesianGrid strokeDasharray="3 3" stroke="#444" />
+
+                  <XAxis 
+                    dataKey="month" 
+                    stroke="#aaa"
+                  />
+
+                  <YAxis stroke="#aaa" />
+
+                  <Tooltip 
+                    contentStyle={{
+                      backgroundColor: "#111827",
+                      border: "1px solid #333",
+                      borderRadius: "10px",
+                    }}
+                  />
+
+                  {/* Income Line */}
+                  <Line
+                    type="monotone"
+                    dataKey="income"
+                    stroke="#34D399"
+                    strokeWidth={3}
+                    dot={{ r: 4 }}
+                  />
+
+                  {/* Expense Line */}
+                  <Line
+                    type="monotone"
+                    dataKey="expense"
+                    stroke="#F87171"
+                    strokeWidth={3}
+                    dot={{ r: 4 }}
+                  />
+
+                </LineChart>
+              </ResponsiveContainer>
+            )}
+          </div>
 
           {/* TRANSACTIONS */}
           <section className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl">

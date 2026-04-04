@@ -25,23 +25,34 @@ const SpendingPieChart = (params : Params) => {
   const [user, setuser] = useState(data?.users.find((user) => user.name === name && user.email === email) || null)
   const spendingsByCategory = user?.spendingByCategory || [];
 
+
   return (
-    <div className="w-full h-75">
-      <ResponsiveContainer width="100%" height={300}>
+  <div className="w-full h-75 flex items-center justify-center">
+    
+    {(!name || !email) ? (
+      <p className="text-gray-400">
+        No spendings data available
+      </p>
+    ) : (!user || spendingsByCategory.length === 0) ? (
+      <p className="text-gray-400">
+        No spendings found
+      </p>
+    ) : (
+      <ResponsiveContainer width="100%" height="100%">
         <PieChart>
           <Pie
             data={spendingsByCategory}
             dataKey="value"
             nameKey="name"
-            outerRadius={80}
-            innerRadius={40} // makes it a donut (looks better)
-            paddingAngle={2} // spacing between slices
+            outerRadius={90}
+            innerRadius={50}
+            paddingAngle={3}
             label={({ name, percent }) =>
               `${name} ${((percent ?? 0) * 100).toFixed(0)}%`
             }
           >
-            {spendingsByCategory.map((entry, index) => (
-             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            {spendingsByCategory.map((_, index) => (
+              <Cell key={index} fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>
 
@@ -49,8 +60,10 @@ const SpendingPieChart = (params : Params) => {
           <Legend />
         </PieChart>
       </ResponsiveContainer>
-    </div>
-  )
+    )}
+
+  </div>
+);
 }
 
 export default SpendingPieChart
