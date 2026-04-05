@@ -4,6 +4,7 @@ import { useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation";
 import type { FinanceContextType } from "@/app/context/FinanceContext";
 import { X } from "lucide-react";
+import { ReloadAlert } from "@/app/components/ReloadAlert";
 
 const Page = () => {
   const router = useRouter()
@@ -19,6 +20,7 @@ const Page = () => {
   const [accounts, setaccounts] = useState(user?.accounts || [])
   const [transactions , setTransactions] = useState(user?.transactions || [])
   const [budget, setbudget] = useState(user?.budgets || [])
+  const [showAlert, setShowAlert] = useState(false);
   
   const [error, seterror] = useState("")
   const [account, setaccount] = useState("")
@@ -155,13 +157,17 @@ const Page = () => {
         });
         localStorage.setItem("realData", JSON.stringify(updatedData));
     }
-    alert("Reload Page to see the new transaction added.");
-    router.back();
+    setShowAlert(true);
+
+    setTimeout(() => {
+      router.refresh();
+      router.push("/dashboard?name=" + name + "&email=" + email);
+    }, 0);
   }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
-
+      {showAlert && <ReloadAlert />}
   {/* Overlay */}
   <div
     className="absolute inset-0 bg-black/40 backdrop-blur-md transition-opacity"

@@ -4,6 +4,7 @@ import type { FinanceContextType } from '@/app/context/FinanceContext';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import { useState } from "react";
+import {ReloadAlert} from '@/app/components/ReloadAlert';
 
 const Page = () => {
 
@@ -16,6 +17,7 @@ const Page = () => {
     const [accountname, setaccountname] = useState("")
     const [accounttype, setaccounttype] = useState("")
     const [error, seterror] = useState("")
+    const [showAlert, setShowAlert] = useState(false);
 
     const [data, setdata] = useState<FinanceContextType>(
         localStorage && JSON.parse(localStorage.getItem("realData") || "null")
@@ -52,14 +54,19 @@ const Page = () => {
                 }
             }
         }
-        alert("Reload Page to see the new account added.");
-        router.back();
+        setShowAlert(true);
+
+        setTimeout(() => {
+          router.refresh();
+          router.push("/dashboard?name=" + name + "&email=" + email);
+        }, 0);
+
     }
 
 
     return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
-
+      {showAlert && <ReloadAlert />}
   {/* Overlay */}
   <div
     className="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity"

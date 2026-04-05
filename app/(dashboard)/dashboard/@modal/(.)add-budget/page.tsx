@@ -5,6 +5,7 @@ import { X } from "lucide-react"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { FinanceContextType } from "@/app/context/FinanceContext";
+import { ReloadAlert } from "@/app/components/ReloadAlert";
 
 const Page = () => {
     const router = useRouter();
@@ -24,6 +25,7 @@ const Page = () => {
     const [limit, setLimit] = useState("")
     const [spendings, setSpendings] = useState("")
     const [error, seterror] = useState("")
+    const [showAlert, setShowAlert] = useState(false);
 
     function handleSubmit(e : React.FormEvent) {
         e.preventDefault();
@@ -60,14 +62,18 @@ const Page = () => {
                 }
             });
             localStorage.setItem("realData", JSON.stringify(data));
-            alert("Reload Page to see the new budget added.");
-            router.back();
+            setShowAlert(true);
+
+            setTimeout(() => {
+              router.refresh();
+              router.push("/dashboard?name=" + name + "&email=" + email);
+            }, 0);
         }
     }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
-
+      {showAlert && <ReloadAlert />}
   {/* Overlay */}
   <div
     className="absolute inset-0 bg-black/40 backdrop-blur-md transition-opacity"
