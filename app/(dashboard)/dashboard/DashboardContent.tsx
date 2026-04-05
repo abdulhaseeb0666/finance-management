@@ -163,8 +163,7 @@ monthlyData?.sort((a, b) => {
   }
 
   return (
-    <div className="min-h-screen bg-[#0B0F19] text-white flex">
-
+    <div className="min-h-screen relative bg-[#0B0F19] text-white flex">
       {/* SIDEBAR (NEW) */}
       <aside className="hidden h-[97vh] sticky top-2 md:flex flex-col w-64 p-6 border-r border-white/10 bg-white/5 backdrop-blur-xl m-2 rounded-2xl hover:shadow-[3px_2px_15px_rgba(99,102,241,0.25)]">
         <h1 className="text-2xl font-bold mb-10">Monetra</h1>
@@ -181,7 +180,7 @@ monthlyData?.sort((a, b) => {
       <div className="flex-1 flex flex-col">
 
         {/* TOP BAR */}
-        <header className="flex justify-between items-center p-6 border-b border-white/10 bg-white/5 backdrop-blur-xl m-4 rounded-2xl mb-0 hover:shadow-[2px_2px_10px_rgba(99,102,241,0.25)]">
+        <header className="flex relative z-20 justify-between items-center p-6 border-b border-white/10 bg-white/5 backdrop-blur-xl m-4 rounded-2xl mb-0 hover:shadow-[2px_2px_10px_rgba(99,102,241,0.25)]">
           <h1 className="text-xl font-semibold">
             Welcome back, <span className="text-indigo-400">{name}</span> 👋
           </h1>
