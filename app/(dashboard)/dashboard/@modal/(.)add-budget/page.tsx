@@ -109,11 +109,42 @@ const Page = () => {
           className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
         >
           <option value="">Select Category</option>
-          <option value="Transfer">Transfer</option>
-          <option value="Food">Food</option>
+          
+          {/* <!-- Basic Needs --> */}
+          <option value="Food">Food & Groceries</option>
+          <option value="Rent">Rent / Housing</option>
+          <option value="Utilities">Utilities (Electricity, Gas, Water)</option>
+          <option value="Transport">Transportation</option>
+          <option value="Fuel">Fuel</option>
+          {/* <!-- Lifestyle --> */}
           <option value="Shopping">Shopping</option>
-          <option value="Transport">Transport</option>
-          <option value="Others">Others</option>
+          <option value="Clothing">Clothing</option>
+          <option value="Entertainment">Entertainment</option>
+          <option value="Travel">Travel</option>
+          <option value="Subscriptions">Subscriptions (Netflix, Spotify, etc.)</option>
+          {/* <!-- Health & Education --> */}
+          <option value="Health">Healthcare / Medical</option>
+          <option value="Fitness">Gym / Fitness</option>
+          <option value="Education">Education</option>
+          <option value="Books">Books & Learning</option>
+          {/* <!-- Financial --> */}
+          <option value="Insurance">Insurance</option>
+          <option value="Taxes">Taxes</option>
+          <option value="Loans">Loan Payments</option>
+          <option value="Savings">Savings / Investments</option>
+          {/* <!-- Social --> */}
+          <option value="Gifts">Gifts / Donations</option>
+          <option value="Family">Family Expenses</option>
+          <option value="Friends">Friends / Social</option>
+          {/* <!-- Personal --> */}
+          <option value="Personalcare">Personal Care</option>
+          <option value="Beauty">Beauty</option>
+          <option value="Hobbies">Hobbies</option>
+          {/* <!-- Others --> */}
+          <option value="Electronics">Electronics</option>
+          <option value="Home">Home Improvement</option>
+          <option value="Pets">Pets</option>
+          <option value="Misc">Miscellaneous</option>
         </select>
       </div>
 

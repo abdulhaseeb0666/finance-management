@@ -250,12 +250,83 @@ const Page = () => {
             className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
           >
             <option value="">Select Category</option>
-            <option value="Transfer">Transfer</option>
-            <option value="Food">Food</option>
-            <option value="Shopping">Shopping</option>
-            <option value="Salary">Salary</option>
-            <option value="Transport">Transport</option>
-            <option value="Others">Others</option>
+            {
+              type == "income" ? (
+                <>
+                <option value="Salary">Salary</option>
+                <option value="Bonus">Bonus</option>
+                <option value="Commission">Commission</option>
+                <option value="Freelance">Freelance Work</option>
+                <option value="PartTime">Part-Time Job</option>
+
+          
+                <option value="Business">Business Income</option>
+                <option value="OnlineBusiness">Online Business</option>
+                <option value="Ecommerce">E-commerce</option>
+
+                
+                <option value="Dividends">Dividends</option>
+                <option value="Interest">Interest</option>
+                <option value="CapitalGains">Capital Gains</option>
+                <option value="Crypto">Cryptocurrency</option>
+
+      
+                <option value="Rental">Rental Income</option>
+                <option value="Royalties">Royalties</option>
+
+                
+                <option value="SideHustle">Side Hustle</option>
+                <option value="ContentCreation">Content Creation (YouTube, Blogging)</option>
+                <option value="Affiliate">Affiliate Marketing</option>
+
+    
+                <option value="Gift">Gifts Received</option>
+                <option value="Refund">Refunds</option>
+                <option value="Scholarship">Scholarship</option>
+                <option value="Allowance">Allowance</option>
+                <option value="Pension">Pension</option>
+                <option value="Other">Other</option>
+                </>
+              ) : (
+                <>
+                  {/* <!-- Basic Needs --> */}
+                  <option value="Food">Food & Groceries</option>
+                  <option value="Rent">Rent / Housing</option>
+                  <option value="Utilities">Utilities (Electricity, Gas, Water)</option>
+                  <option value="Transport">Transportation</option>
+                  <option value="Fuel">Fuel</option>
+                  {/* <!-- Lifestyle --> */}
+                  <option value="Shopping">Shopping</option>
+                  <option value="Clothing">Clothing</option>
+                  <option value="Entertainment">Entertainment</option>
+                  <option value="Travel">Travel</option>
+                  <option value="Subscriptions">Subscriptions (Netflix, Spotify, etc.)</option>
+                  {/* <!-- Health & Education --> */}
+                  <option value="Health">Healthcare / Medical</option>
+                  <option value="Fitness">Gym / Fitness</option>
+                  <option value="Education">Education</option>
+                  <option value="Books">Books & Learning</option>
+                  {/* <!-- Financial --> */}
+                  <option value="Insurance">Insurance</option>
+                  <option value="Taxes">Taxes</option>
+                  <option value="Loans">Loan Payments</option>
+                  <option value="Savings">Savings / Investments</option>
+                  {/* <!-- Social --> */}
+                  <option value="Gifts">Gifts / Donations</option>
+                  <option value="Family">Family Expenses</option>
+                  <option value="Friends">Friends / Social</option>
+                  {/* <!-- Personal --> */}
+                  <option value="Personalcare">Personal Care</option>
+                  <option value="Beauty">Beauty</option>
+                  <option value="Hobbies">Hobbies</option>
+                  {/* <!-- Others --> */}
+                  <option value="Electronics">Electronics</option>
+                  <option value="Home">Home Improvement</option>
+                  <option value="Pets">Pets</option>
+                  <option value="Misc">Miscellaneous</option>
+                </>
+              )
+            }
           </select>
         </div>
       </div>
