@@ -28,47 +28,47 @@ const Page = () => {
     const [showAlert, setShowAlert] = useState(false);
 
     function handleSubmit(e : React.FormEvent) {
-        e.preventDefault();
-        
-        seterror("")
+      e.preventDefault();
+      
+      seterror("")
 
-        if(!category || !limit || !spendings) {
-            seterror("Please fill all the fields");
-            return;
-        }
+      if(!category || !limit || !spendings) {
+          seterror("Please fill all the fields");
+          return;
+      }
 
-        let budgetExists = false;
-        
-        budget.forEach((b) => { 
-            if(b.category === category) {
-                seterror("Budget for this category already exists");
-                budgetExists = true;
-                return;
+      let budgetExists = false;
+      
+      budget.forEach((b) => { 
+          if(b.category === category) {
+              seterror("Budget for this category already exists");
+              budgetExists = true;
+              return;
+          }
+      });
+
+      if(budgetExists) return;
+
+      const newBudget = {
+          category: category,
+          limit: Number(limit),
+          spent: Number(spendings),
+      }
+
+      if(user){
+        data?.users.forEach((u) => {
+            if(u.name === user.name && u.email === user.email){
+                u.budgets.push(newBudget)
             }
         });
+      }
+      localStorage.setItem("realData", JSON.stringify(data));
+      setShowAlert(true);
 
-        if(budgetExists) return;
-
-        const newBudget = {
-            category: category,
-            limit: Number(limit),
-            spent: Number(spendings),
-        }
-
-        if(user){
-            data?.users.forEach((u) => {
-                if(u.name === user.name && u.email === user.email){
-                    u.budgets.push(newBudget)
-                }
-            });
-            localStorage.setItem("realData", JSON.stringify(data));
-            setShowAlert(true);
-
-            setTimeout(() => {
-              router.refresh();
-              router.push("/dashboard?name=" + name + "&email=" + email);
-            }, 0);
-        }
+      setTimeout(() => {
+        router.refresh();
+        router.push("/dashboard?name=" + name + "&email=" + email);
+      }, 0);
     }
 
   return (
